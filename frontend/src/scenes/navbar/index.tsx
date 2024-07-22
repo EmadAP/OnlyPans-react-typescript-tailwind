@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid"
 import logo from '@/assets/logo.png'
-import Link from "./Link"
+import { Link } from "react-router-dom"
+import Links from "./Links"
 import { SelectedPage } from "@/shared/types"
 import useMediaQuery from "@/hooks/useMediaQuery"
-import ActionButton from "@/shared/ActionButton"
+
+import { useAuth } from "@/context/useAuth"
 
 type Props = {
   isTopOfPage:boolean
@@ -13,6 +15,8 @@ type Props = {
 }
 
 const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage}: Props) => {
+    const { isLoggedIn, user, logout } = useAuth();
+    const buttonClass = "rounded-md bg-secondary-500 px-10 py-2 hover:bg-primary-500 hover:text-white"
     const flexBetween = "flex items-center justify-between";
     const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
     const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
@@ -29,39 +33,60 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage}: Props) => {
               {/* RIGHT SIDE */}
               { isAboveMediumScreens ? (<div className={`${flexBetween} w-full`}>
                 <div className={`${flexBetween} gap-8 text-sm`}>
-                  <Link 
+                  <Links 
                   page="Home" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                  <Link 
+                  <Links 
                   page="Recipes" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                  <Link 
+                  <Links 
                   page="Our Classes" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                  <Link 
+                  <Links 
                   page="Contact Us" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                </div>
-                <div className={`${flexBetween} gap-8`}>
-                  <ActionButton setSelectedPage={setSelectedPage}>Sign In</ActionButton>
-                  <ActionButton setSelectedPage={setSelectedPage}>Become a Member</ActionButton>
-                </div>
+                </div>   
+                  {isLoggedIn() ? (
+                      <button className={`${flexBetween} gap-8`}>
+                      <div className={`${buttonClass}`}>Welcome, {user?.userName}</div>
+                      <a className={`${buttonClass}`}  onClick={logout}>Logout</a>
+                      </button> 
+                    ) : (
+                      <button className={`${flexBetween} gap-8`}>
+                      <Link className={`${buttonClass}`} to="/login">Login</Link>
+                      <Link className={`${buttonClass}`} to="login/register">Sign Up</Link>
+                      </button> 
+                    )}         
+                  
               </div>
               ) : (
+              <div className={`${flexBetween} gap-8 text-sm`}>               
+                  {isLoggedIn() ? (
+                      <button className={`${flexBetween} gap-8`}>
+                      <div className={`${buttonClass}`}>Welcome, {user?.userName}</div>
+                      <a className={`${buttonClass}`}  onClick={logout}>Logout</a>
+                      </button> 
+                    ) : (
+                      <button className={`${flexBetween} gap-8`}>
+                      <Link className={`${buttonClass}`} to="/login">Login</Link>
+                      <Link className={`${buttonClass}`} to="login/register">Sign Up</Link>
+                      </button> 
+                    )}                
                 <button
                 className="rounded-full bg-secondary-500 p-2"
                   onClick={() => setIsMenuToggled(!isMenuToggled)}
                 >
                  <Bars3Icon className="h-6 w-6 text-white" /> 
                 </button>
+              </div>
               )}
             </div>
           </div>
@@ -79,22 +104,22 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage}: Props) => {
 
           {/* MENU ITEMS */}
           <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-                  <Link 
+                  <Links 
                   page="Home" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                  <Link 
+                  <Links 
                   page="Recipes" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                  <Link 
+                  <Links 
                   page="Our Classes" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}
                   />
-                  <Link 
+                  <Links 
                   page="Contact Us" 
                   selectedPage={selectedPage}
                   setSelectedPage={setSelectedPage}

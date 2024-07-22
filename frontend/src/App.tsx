@@ -1,43 +1,34 @@
-import Navbar from '@/scenes/navbar';
-import Home from '@/scenes/home';
-import Recipes from '@/scenes/recipes'
-import OurClasses from '@/scenes/ourClasses'
-import ContactUs from '@/scenes/contactUs'
-import Footer from '@/scenes/footer'
-import { useEffect, useState } from 'react';
-import { SelectedPage  } from '@/shared/types';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import { UserProvider } from './context/useAuth';
+import HomePage from './HomePage';
+import LoginPage from './scenes/loginPage';
+import RegisterPage from './scenes/registerPage';
+import SearchPage from './scenes/recipes/searchPage';
+import MyRecipes from './scenes/recipes/myRecipes';
+import SearchMyRecipes from './scenes/recipes/searchMyRecipes';
+
 
 
 function App() {
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home);
-
-  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setIsTopOfPage(true);
-        setSelectedPage(SelectedPage.Home);
-      }
-      if (window.scrollY !== 0 ) setIsTopOfPage(false);
-    }
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return <div className="app bg-gray-20">
-    <Navbar 
-    isTopOfPage={isTopOfPage}
-    selectedPage={selectedPage}
-    setSelectedPage={setSelectedPage}
-    />
-
-    <Home setSelectedPage={setSelectedPage} />
-    <Recipes setSelectedPage={setSelectedPage} />
-    <OurClasses setSelectedPage={setSelectedPage} />
-    <ContactUs setSelectedPage={setSelectedPage} />
-    <Footer />
-  </div>;
+  return ( 
+    <div className="app bg-gray-20">
+      <BrowserRouter>
+        <UserProvider>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='login' element={<LoginPage />} />
+            <Route path='login/register' element={<RegisterPage />} />
+            <Route path='searchPage' element={<SearchPage />} />
+            <Route path='myRecipes' element={<MyRecipes />} />
+            <Route path='searchMyRecipes' element={<SearchMyRecipes />} />
+          </Routes>
+            <ToastContainer />
+        </UserProvider>
+      </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

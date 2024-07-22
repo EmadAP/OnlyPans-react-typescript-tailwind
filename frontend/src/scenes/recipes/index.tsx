@@ -1,5 +1,5 @@
 import HText from "@/shared/HText";
-import { RecipesType, SelectedPage } from "@/shared/types"
+import { RecipesSidePage, RecipesType, SelectedPage } from "@/shared/types"
 import { AcademicCapIcon, HomeModernIcon, UserGroupIcon } from "@heroicons/react/24/solid"
 import { motion } from "framer-motion"
 import Recipe from "./Recipe";
@@ -9,18 +9,21 @@ import RecipesPageGraphic from "@/assets/RecipesPageGraphic.png"
 const recipes: Array<RecipesType> = [
     {
         icon: <HomeModernIcon className="h-6 w-6" />,
-        title: "Quick and easy dishes",
-        description: "Under 5 minutes and easy to cook recipes that you can provide for your family and friends"
+        title: "100's of homemade recipes",
+        description: "Try our famous recipes from every country and that can be cooked just with 1 PAN",
+        sidePage: () => sidePage(RecipesSidePage.SearchPage)
     },
     {
         icon: <UserGroupIcon className="h-6 w-6" />,
         title: "Share your recipes",
-        description: "Show your home made dishes to others and see their recipes, try other peoples dishes and give them your opinion"
+        description: "Show your home made dishes to others and see their recipes, try other peoples dishes and give them your opinion",
+        sidePage: () => sidePage(RecipesSidePage.MyRecipes)
     },
     {
         icon: <AcademicCapIcon className="h-6 w-6" />,
-        title: "100's of homemade recipes",
-        description: "Try our famous recipes from every country and that can be cooked just with 1 PAN"
+        title: "Recipes that are made by our users",
+        description: "Try the recipes that you and other people are made in our website",
+        sidePage: () => sidePage(RecipesSidePage.SearchMyRecipes)
     },
 ];
 
@@ -34,9 +37,10 @@ const container = {
 
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
+    sidePage: (value: RecipesSidePage) => void;
 }
 
-const Recipes = ({setSelectedPage}: Props) => {
+const Recipes = ({setSelectedPage, sidePage}: Props) => {
   return (
     <section
     id="recipes"
@@ -76,7 +80,7 @@ const Recipes = ({setSelectedPage}: Props) => {
                     icon={recipe.icon}
                     title={recipe.title}
                     description={recipe.description}
-                    setSelectedPage={setSelectedPage}
+                    sidePage={recipe.sidePage}
                 />
             ))}
         </motion.div>
@@ -149,3 +153,9 @@ const Recipes = ({setSelectedPage}: Props) => {
 
 
 export default Recipes
+
+
+function sidePage(SearchPage: RecipesSidePage): void {
+    throw new Error("Function not implemented.");
+}
+

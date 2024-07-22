@@ -9,6 +9,7 @@ export enum SelectedPage {
     icon: JSX.Element;
     title: string;
     description: string;
+    sidePage: (value: RecipesSidePage) => void;
   }
 
   export interface ClassType {
@@ -16,3 +17,21 @@ export enum SelectedPage {
     description: string;
     image: string;
   }
+
+export type UserProfileToken = {
+  userName: string;
+  email: string;
+  token: string;
+}
+
+export type UserProfile = {
+  userName: string;
+  email: string;
+}
+
+export enum RecipesSidePage {
+  SearchPage = "searchPage",
+  MyRecipes = "myRecipes",
+  SearchMyRecipes = "searchMyRecipes"
+}
+

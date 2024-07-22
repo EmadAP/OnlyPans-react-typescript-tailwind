@@ -7,7 +7,7 @@ type Props = {
     setSelectedPage: (value: SelectedPage) =>void;
 }
 
-const Link = ({
+const Links = ({
     page,
     selectedPage,
     setSelectedPage,
@@ -26,4 +26,4 @@ const Link = ({
   )
 }
 
-export default Link
+export default Links

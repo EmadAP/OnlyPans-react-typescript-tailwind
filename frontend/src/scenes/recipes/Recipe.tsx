@@ -1,6 +1,7 @@
-import { SelectedPage } from '@/shared/types';
+import { RecipesSidePage } from '@/shared/types';
 import { motion } from 'framer-motion';
-import AnchorLink from 'react-anchor-link-smooth-scroll';
+
+import { Link } from 'react-router-dom';
 
 const childVariant ={
   hidden: { opacity: 0, scale: 0.9 },
@@ -12,10 +13,10 @@ type Props = {
   icon: JSX.Element;
   title: string;
   description: string;
-  setSelectedPage: (value: SelectedPage) => void;  
+  sidePage: (value: RecipesSidePage) => void;  
 }
 
-const Recipe = ({ icon, title, description, setSelectedPage }: Props) => {
+const Recipe = ({ icon, title, description, sidePage }: Props) => {
   return (
     <motion.div 
     variants={childVariant}
@@ -28,13 +29,13 @@ const Recipe = ({ icon, title, description, setSelectedPage }: Props) => {
 
         <h4 className='font-bold'>{title}</h4>
         <p className='my-3'>{description}</p>
-        <AnchorLink
+        <Link
             className="text-sm font-bold text-primary-500 underline hover:text-secondary-500"
-            onClick={() => setSelectedPage(SelectedPage.ContactUs)}
-            href={`#${SelectedPage.ContactUs}`}
+            onClick={() => sidePage(RecipesSidePage.SearchMyRecipes)}
+            to="/searchMyRecipes"
             >
                 <p>Learn More</p>
-        </AnchorLink>
+        </Link>
     </motion.div>
   )
 }
