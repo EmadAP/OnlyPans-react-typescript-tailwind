@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { SelectedPage } from "@/shared/types";
 import { motion } from "framer-motion";
 import ContactUsPageGraphic from "@/assets/ContactUsPageGraphic.jpg";
+import EvolveText from "@/assets/EvolveText.png"
 import HText from "@/shared/HText";
 
 type Props = {
@@ -128,6 +129,13 @@ const ContactUs = ({ setSelectedPage }: Props) => {
                 SUBMIT
               </button>
             </form>
+            <div>
+            <img 
+               className="w-full mt-24"
+               alt="home-page-text"
+               src={EvolveText}
+              />
+            </div>
           </motion.div>
 
           <motion.div
@@ -141,13 +149,16 @@ const ContactUs = ({ setSelectedPage }: Props) => {
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <div className="w-full before:absolute before:-bottom-20 before:-right-10 before:z-[-1] md:before:content-evolvetext">
+            
+            <div >
               <img
                 className="w-full"
                 alt="contact-us-page-graphic"
                 src={ContactUsPageGraphic}
               />
+             
             </div>
+            
           </motion.div>
         </div>
       </motion.div>
